@@ -1,0 +1,61 @@
+{
+    "users": [
+        {
+            "name": "guest",
+            "password_hash": "BMfxN8drrYcIqXZMr+pWTpDT0nMcOagMduLX0bjr4jwud/pN",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": [
+                "administrator"
+            ],
+            "limits": {}
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "queues": [
+        {
+            "vhost": "/",
+            "name": "y",
+            "durable": true
+        },
+        {
+            "vhost": "/",
+            "name": "z",
+            "durable": true
+        }
+    ],
+    "exchanges": [
+        {
+            "vhost": "/",
+            "name": "events",
+            "type": "fanout",
+            "durable": true
+        }
+    ],
+    "bindings": [
+        {
+            "vhost": "/",
+            "source": "events",
+            "destination": "y",
+            "destination_type": "queue"
+        },
+        {
+            "vhost": "/",
+            "source": "events",
+            "destination": "z",
+            "destination_type": "queue"
+        }
+    ]
+}

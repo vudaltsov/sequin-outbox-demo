@@ -1,0 +1,41 @@
+account:
+  name: sequin
+
+users:
+  - account: sequin
+    email: admin@sequinstream.com
+    password: sequinpassword!
+
+functions:
+  - name: record.message
+    type: path
+    path: record.message
+
+databases:
+  - name: app
+    username: postgres
+    password: postgres
+    hostname: postgres
+    database: app
+    port: 5432
+    slot_name: sequin_slot
+    publication_name: sequin_pub
+
+sinks:
+  - name: outbox
+    database: app
+    source:
+      include_table_names:
+        - public.outbox
+    actions:
+      - insert
+    transform: record.message
+    batch_size: 10
+    destination:
+      type: rabbitmq
+      host: rabbitmq
+      virtual_host: /
+      username: guest
+      password: guest
+      port: 5672
+      exchange: events
