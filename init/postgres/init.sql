@@ -1,10 +1,7 @@
--- Create a new logical database
 create database app;
 
--- Connect to the new database
 \c app
 
--- Create tables and seed data
 create table outbox (
     message_id uuid primary key,
     message jsonb
